@@ -34,8 +34,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isLive) //죽었으면 종료
             return;
-
+ 
         //목표의 x축과 자신의 x축 값을 비교하여 작으면 X축을 기준으로 Flip 되도록 FlipX를 True로 설정
         spriter.flipX = target.position.x < rigid.position.x;
     }
+
+    void OnEnable()
+    {
+        target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
+    }
+
 }
