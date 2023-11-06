@@ -5,16 +5,21 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;         //속도
+    public float health;        //체력
+    public float maxHealth;     //최대 체력
+    public RuntimeAnimatorController[] animCon;     //몬스터의 애니메이터를 바꾸기 위한 컨트롤러
     public Rigidbody2D target;  //목표 Rigidbody
 
-    bool isLive = true; //생존여부
+    bool isLive; //생존여부
 
     Rigidbody2D rigid;
+    Animator anim;
     SpriteRenderer spriter;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         spriter = GetComponent<SpriteRenderer>();
     }
     
@@ -34,8 +39,47 @@ public class Enemy : MonoBehaviour
     {
         if (!isLive) //죽었으면 종료
             return;
-
+ 
         //목표의 x축과 자신의 x축 값을 비교하여 작으면 X축을 기준으로 Flip 되도록 FlipX를 True로 설정
         spriter.flipX = target.position.x < rigid.position.x;
+    }
+
+    void OnEnable() //활성화 될 때 한 번 실행
+    {
+        target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
+        isLive = true; //생존여부 초기화
+        health = maxHealth;
+    }
+
+    public void Init(SpawnData data) //초기 속성을 적용하는 함수 작성
+    {
+        anim.runtimeAnimatorController = animCon[data.spriteType];  //애니메이션 적용
+        speed = data.speed;         //속도 적용
+        maxHealth = data.health;    //체력 적용
+        health = data.health;                                           
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Bullet")) // 충돌한 collision이 Bullet인지를 먼저 확인
+            return;
+
+        health -= collision.GetComponent<Bullet>().damage; //Bullet 스크립트 컴포넌트에서 damage를 가져와서 체력에서 깍는다.
+
+        if (health > 0)
+        {
+            // .. 아직 살아있음 -> Hit Action 
+        }
+        else
+        {
+            // .. 체력이 0보다 작음 -> Die 
+            Dead();
+        }
+    }
+
+    void Dead()
+    {
+        //비활성화를 해준다.
+        gameObject.SetActive(false);
     }
 }
