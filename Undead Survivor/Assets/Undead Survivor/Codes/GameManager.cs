@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;     //게임 최대 시간 (test용 20초)
 
     [Header("# Player Info")]
+    public int health;
+    public int maxHealth = 100;
     public int level;   //레벨
     public int kill;    //킬수
     public int exp;     //경험치
