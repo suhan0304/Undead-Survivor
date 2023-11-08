@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        health = maxHealth;
+    }
+
     void Update()
     {
         //DeltaTime : 한 프레임에 걸린 시간

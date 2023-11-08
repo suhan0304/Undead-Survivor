@@ -41,10 +41,12 @@ public class HUD : MonoBehaviour
                 float remainTime = GameManager.Instance.maxGameTime - GameManager.Instance.gameTime;
                 int min = Mathf.FloorToInt(remainTime / 60); // 분 = 남은 시간 (초) / 60 \ 소숫점은 버리고 int로 변환 
                 int sec = Mathf.FloorToInt(remainTime % 60); //분 = 남은 시간 (초) % 60 \ 소숫점은 버리고 int로 변환
-                myText.text = string.Format("{0:D2}:{0:D2}",min, sec);
+                myText.text = string.Format("{0:D2}:{1:D2}",min, sec);
                 break;
             case InfoType.Health:
-
+                float curHealth = GameManager.Instance.health; //현재 exp
+                float maxHealth = GameManager.Instance.maxHealth; //레벨업에 필요한 경험치
+                mySlider.value = curHealth / maxHealth;
                 break;
         }
     }
