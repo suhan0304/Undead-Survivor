@@ -15,12 +15,7 @@ public class Weapon : MonoBehaviour
 
     void Awake()
     {
-        player = GetComponentInParent<Player>(); //부모 오브젝트의 컴포넌트를 가져온다.
-    }
-
-    private void Start()
-    {
-        Init();
+        player = GameManager.Instance.player;
     }
 
     void Update()
@@ -59,8 +54,29 @@ public class Weapon : MonoBehaviour
     }
 
 
-    public void Init()
+    public void Init(ItemData data)
     {
+        //Basic Set
+        name = "Weapon " + data.itemId; //이름 설정
+        transform.parent = player.transform; //부모 오브젝트 설정
+        //플레이어 안에서 위치를 0, 0, 0으로 맞추기 때문에 LocalPostion 사용
+        transform.localPosition = Vector3.zero;
+
+        //Property Set
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        for (int i=0;i<GameManager.Instance.pool.prefabs.Length;i++)
+        {
+            //프리팹 아이디는 풀링 매니저의 변수에서 찾아서 초기화
+            
+            if (data.projectile == GameManager.Instance.pool.prefabs[i]) 
+            {
+                prefabId = i;
+                break;
+            }
+        }
 
         //무기 id에 맞게 무기 속성을 설정
         switch(id)
