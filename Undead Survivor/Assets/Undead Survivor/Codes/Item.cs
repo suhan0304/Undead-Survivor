@@ -54,6 +54,8 @@ public class Item : MonoBehaviour
 
                     weapon.LevelUp(nextDamage, nextCount); //Weapon의 LevelUp 함수를 이용해 레벨업
                 }
+
+                level++;
                 break;
             case ItemData.ItemType.Glove: // 무기가 아닌 장비들은 같은 로직을 사용
             case ItemData.ItemType.Shoe:
@@ -72,12 +74,13 @@ public class Item : MonoBehaviour
 
                     gear.LevelUp(nextRate);
                 }
+
+                level++;
                 break;
-            case ItemData.ItemType.Heal:
+            case ItemData.ItemType.Heal: // 일회성 아이템의 안에서는 LevelUp 함수 실행을 X
+                GameManager.Instance.health = GameManager.Instance.maxHealth;
                 break;
         }
-
-        level++;
         // 스크립트블 오브젝트에 작성한 레벨 데이터 개수를 넘기지 않게 로직 추가
         if (level == data.damages.Length)// damages에 들어있는 데이터 개수와 같아지면
         {

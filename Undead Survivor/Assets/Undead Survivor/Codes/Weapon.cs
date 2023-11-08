@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
         {
             case 0:
                 //z축 방향으로 back 방향으로 회전 (Speed가 음수라서 back 방향으로 지정)
-                transform.Rotate(Vector3.forward * speed * Time.deltaTime); 
+                transform.Rotate(Vector3.back * speed * Time.deltaTime); 
                 break;
             default:
                 timer += Time.deltaTime;
@@ -51,6 +51,10 @@ public class Weapon : MonoBehaviour
 
         if (id == 0) //id가 0이면 재배치
             Batch();
+
+        //Weapon이 레벨업하면 ApplyGear로 레벨업한 무기에 Gear 레벨을 적용
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver); //플레이어에게 broadcast해주도록 부탁
+        //플레이어가 가지고 있는 모든 Gear에 한해서 ApplyGear가 실행
     }
 
 
@@ -82,7 +86,7 @@ public class Weapon : MonoBehaviour
         switch(id)
         {
             case 0:
-                speed = -150;   //마이너스 = 시계방향
+                speed = 150;   //마이너스 = 시계방향
                 Batch();        //무기 배치          
                 break;
             case 1:
@@ -91,6 +95,10 @@ public class Weapon : MonoBehaviour
             default:
                 break;
         }
+
+        //Weapon이 새롭게 추가되면 ApplyGear로 새롭게 추가된 무기에 Gear 레벨을 적용
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver); //플레이어에게 broadcast해주도록 부탁
+        //플레이어가 가지고 있는 모든 Gear에 한해서 ApplyGear가 실행
     }
 
     void Batch()// 생성된 무기를 배치하는 함수
