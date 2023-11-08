@@ -9,9 +9,9 @@ AnimatorOverrideController:
   m_Name: AcEnemy 2
   m_Controller: {fileID: 9100000, guid: f2855d618fc8d9c499189d3f39b9cbbc, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: bb6aa34a692c0f649b221cee2e9aac1b, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 792dace2543560b448e79e612c64624f, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 28478ba90b1f6894ca487846b8539fd9, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 48cdb5494ef85d744bbe341105c062ab, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 41eb84b5ea0c13b4384ead9f37ce4b8d, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 55dcdd9ab79e45e41855a1ba5dd14c80, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4883d8bfc1662aa44a0f841b41eb75a9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2e8dd49018d6eb14ab93c6e02509dff5, type: 2}

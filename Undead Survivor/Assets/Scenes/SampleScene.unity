@@ -14266,7 +14266,7 @@ MonoBehaviour:
   id: 1
   prefabId: 2
   damage: 4
-  count: 1
+  count: 0
   speed: 0
   timer: 0
 --- !u!1 &1713564595
@@ -14552,7 +14552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2005179397
 Transform:
   m_ObjectHideFlags: 0
