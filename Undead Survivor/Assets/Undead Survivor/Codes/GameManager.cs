@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public PoolManager pool;
     public Player player;
-
+     
 
     void Awake()
     {
