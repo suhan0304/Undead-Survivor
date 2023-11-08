@@ -15,12 +15,7 @@ public class Weapon : MonoBehaviour
 
     void Awake()
     {
-        player = GetComponentInParent<Player>(); //부모 오브젝트의 컴포넌트를 가져온다.
-    }
-
-    private void Start()
-    {
-        Init();
+        player = GameManager.Instance.player;
     }
 
     void Update()
@@ -30,7 +25,7 @@ public class Weapon : MonoBehaviour
         {
             case 0:
                 //z축 방향으로 back 방향으로 회전 (Speed가 음수라서 back 방향으로 지정)
-                transform.Rotate(Vector3.forward * speed * Time.deltaTime); 
+                transform.Rotate(Vector3.back * speed * Time.deltaTime); 
                 break;
             default:
                 timer += Time.deltaTime;
@@ -56,17 +51,42 @@ public class Weapon : MonoBehaviour
 
         if (id == 0) //id가 0이면 재배치
             Batch();
+
+        //Weapon이 레벨업하면 ApplyGear로 레벨업한 무기에 Gear 레벨을 적용
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver); //플레이어에게 broadcast해주도록 부탁
+        //플레이어가 가지고 있는 모든 Gear에 한해서 ApplyGear가 실행
     }
 
 
-    public void Init()
+    public void Init(ItemData data)
     {
+        //Basic Set
+        name = "Weapon " + data.itemId; //이름 설정
+        transform.parent = player.transform; //부모 오브젝트 설정
+        //플레이어 안에서 위치를 0, 0, 0으로 맞추기 때문에 LocalPostion 사용
+        transform.localPosition = Vector3.zero;
+
+        //Property Set
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        for (int i=0;i<GameManager.Instance.pool.prefabs.Length;i++)
+        {
+            //프리팹 아이디는 풀링 매니저의 변수에서 찾아서 초기화
+            
+            if (data.projectile == GameManager.Instance.pool.prefabs[i]) 
+            {
+                prefabId = i;
+                break;
+            }
+        }
 
         //무기 id에 맞게 무기 속성을 설정
         switch(id)
         {
             case 0:
-                speed = -150;   //마이너스 = 시계방향
+                speed = 150;   //마이너스 = 시계방향
                 Batch();        //무기 배치          
                 break;
             case 1:
@@ -75,6 +95,10 @@ public class Weapon : MonoBehaviour
             default:
                 break;
         }
+
+        //Weapon이 새롭게 추가되면 ApplyGear로 새롭게 추가된 무기에 Gear 레벨을 적용
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver); //플레이어에게 broadcast해주도록 부탁
+        //플레이어가 가지고 있는 모든 Gear에 한해서 ApplyGear가 실행
     }
 
     void Batch()// 생성된 무기를 배치하는 함수
