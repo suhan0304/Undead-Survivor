@@ -96,6 +96,11 @@ public class Weapon : MonoBehaviour
                 break;
         }
 
+        // Hand Set
+        Hand hand = player.hands[(int)data.itemType]; //아이템 타입에 맞는 핸드를 아이템을 hand에 연결
+        hand.spriter.sprite = data.hand; //추가해놨던 hand sprite를 적용
+        hand.gameObject.SetActive(true);
+
         //Weapon이 새롭게 추가되면 ApplyGear로 새롭게 추가된 무기에 Gear 레벨을 적용
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver); //플레이어에게 broadcast해주도록 부탁
         //플레이어가 가지고 있는 모든 Gear에 한해서 ApplyGear가 실행
