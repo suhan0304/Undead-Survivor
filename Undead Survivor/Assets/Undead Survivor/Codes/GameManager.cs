@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
     }
 
     void Update()
