@@ -33,16 +33,22 @@ public class Item : MonoBehaviour
         textLevel.text = "Lv." + (level + 1);
         switch (data.itemType)
         {
+            //%는 항상 100을 곱해서 넘겨주기
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:
                 //무기는 입력된 itemDesc의 텍스트의 매개변수에 damages와 counts를 넣어서 문자열 생성
-                textDesc.text = string.Format(data.itemDesc, data.damages[level], data.counts[level]);
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100, data.counts[level]);
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
                 //장비는 입력된 itemDesc의 텍스트의 매개변수에 damages와 counts를 넣어서 문자열 생성
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100);
+                break;
+            default:
+                //음료는 설명만 출력
                 textDesc.text = string.Format(data.itemDesc, data.damages[level]);
                 break;
+
         }
     }
 

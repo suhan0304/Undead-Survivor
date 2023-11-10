@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public PoolManager pool;
     public Player player;
+    public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
      
 
     void Awake()
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             level++;
             exp = 0;
+            uiLevelUp.Show();
         }
     }
 }
