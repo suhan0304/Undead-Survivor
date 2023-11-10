@@ -26,7 +26,7 @@ public class HUD : MonoBehaviour
         {
             case InfoType.Exp:
                 float curExp = GameManager.Instance.exp; //현재 exp
-                float maxExp = GameManager.Instance.nextExp[GameManager.Instance.level]; //레벨업에 필요한 경험치
+                float maxExp = GameManager.Instance.nextExp[Mathf.Min(GameManager.Instance.level, GameManager.Instance.nextExp.Length - 1)]; //레벨업에 필요한 경험치
                 mySlider.value = curExp / maxExp;
                 break;
 
