@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Player player;
     public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
-    public GameObject uiResult;  //결과창 오브젝트
+    public Result uiResult;  //결과창 오브젝트
+    public GameObject enemyCleaner;
 
 
     void Awake()
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         health = maxHealth;
         uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
-        isLive = true;
+        Resume();           //재시작 시 시간 배속을 1로 맞춰 주도록 start에 resume 호출
     }
 
     public void GameOver()
@@ -50,7 +51,25 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        uiResult.SetActive(true);
+        uiResult.gameObject.SetActive(true);
+        uiResult.Lose();
+        Stop();
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
+
+    IEnumerator GameVictoryRoutine()
+    {
+        isLive = false; //모든 작업 정지
+
+        enemyCleaner.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
+        uiResult.gameObject.SetActive(true);
+        uiResult.Win();
         Stop();
     }
 
@@ -71,11 +90,15 @@ public class GameManager : MonoBehaviour
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
+            GameVictory();
         }
     }
 
     public void GetExp()
     {
+        if (!isLive) // 끝났을때 경험치가 오르는 상황 방지
+            return; 
+
         exp++;
 
         if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
