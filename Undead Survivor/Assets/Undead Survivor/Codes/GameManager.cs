@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;     //게임 최대 시간 (test용 20초)
 
     [Header("# Player Info")]
-    public int health;
-    public int maxHealth = 100;
+    public float health;
+    public float maxHealth = 100;
     public int level;   //레벨
     public int kill;    //킬수
     public int exp;     //경험치
@@ -22,7 +23,9 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Player player;
     public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
-     
+    public Result uiResult;  //결과창 오브젝트
+    public GameObject enemyCleaner;
+
 
     void Awake()
     {
@@ -30,10 +33,49 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public void GameStart()
     {
         health = maxHealth;
         uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
+        Resume();           //재시작 시 시간 배속을 1로 맞춰 주도록 start에 resume 호출
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        isLive = false; //모든 작업 정지
+
+        yield return new WaitForSeconds(0.5f);
+
+        uiResult.gameObject.SetActive(true);
+        uiResult.Lose();
+        Stop();
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
+
+    IEnumerator GameVictoryRoutine()
+    {
+        isLive = false; //모든 작업 정지
+
+        enemyCleaner.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
+        uiResult.gameObject.SetActive(true);
+        uiResult.Win();
+        Stop();
+    }
+
+    public void GameRetry()
+    {
+        SceneManager.LoadScene(0);//0번째 Scene을 불러온다.
     }
 
     void Update()
@@ -48,11 +90,15 @@ public class GameManager : MonoBehaviour
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
+            GameVictory();
         }
     }
 
     public void GetExp()
     {
+        if (!isLive) // 끝났을때 경험치가 오르는 상황 방지
+            return; 
+
         exp++;
 
         if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
