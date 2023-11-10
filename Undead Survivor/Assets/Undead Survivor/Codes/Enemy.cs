@@ -29,6 +29,9 @@ public class Enemy : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (!GameManager.Instance.isLive)
+            return;
+
         if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) //죽었으면 종료
             return;
 
@@ -41,6 +44,9 @@ public class Enemy : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!GameManager.Instance.isLive)
+            return;
+
         if (!isLive) //죽었으면 종료
             return;
  

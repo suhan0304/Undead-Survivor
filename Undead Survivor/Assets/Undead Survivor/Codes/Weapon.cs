@@ -20,8 +20,11 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.isLive)
+            return;
+
         //무기 id에 맞게 로직 구현
-        switch(id)
+        switch (id)
         {
             case 0:
                 //z축 방향으로 back 방향으로 회전 (Speed가 음수라서 back 방향으로 지정)

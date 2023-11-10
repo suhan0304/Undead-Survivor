@@ -19,12 +19,14 @@ public class LevelUp : MonoBehaviour
     public void Show()
     {
         rect.localScale = Vector3.one;
+        GameManager.Instance.Stop();
     }
 
     //레벨업 창을 숨기는 함수
     public void Hide()
     {
         rect.localScale = Vector3.zero;
+        GameManager.Instance.Resume();
     }
 
     public void Select(int index)
