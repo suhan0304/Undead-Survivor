@@ -12,6 +12,8 @@ public class Item : MonoBehaviour
 
     Image icon;
     Text textLevel;
+    Text textName;
+    Text textDesc;
 
     void Awake()
     {
@@ -21,11 +23,27 @@ public class Item : MonoBehaviour
 
         Text[] texts = GetComponentsInChildren<Text>(); //자식의 Text 컴포넌트 가져오기
         textLevel = texts[0];   //item 오브젝트에는 Text가 없어서 자식에 있는 Text만 오기 때문에 첫번째[0]로 초기화
+        textName = texts[1];    //GetComponents의 순서는 계층 구조의 순서를 따라간다.
+        textDesc = texts[2];
+        textName.text = data.itemName; //아이템 이름 앞으로도 버튼에 고정이므로 바로 초기화
     }
 
-    void LateUpdate()
+    void OnEnable()
     {
         textLevel.text = "Lv." + (level + 1);
+        switch (data.itemType)
+        {
+            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Range:
+                //무기는 입력된 itemDesc의 텍스트의 매개변수에 damages와 counts를 넣어서 문자열 생성
+                textDesc.text = string.Format(data.itemDesc, data.damages[level], data.counts[level]);
+                break;
+            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Shoe:
+                //장비는 입력된 itemDesc의 텍스트의 매개변수에 damages와 counts를 넣어서 문자열 생성
+                textDesc.text = string.Format(data.itemDesc, data.damages[level]);
+                break;
+        }
     }
 
     public void OnClick()
