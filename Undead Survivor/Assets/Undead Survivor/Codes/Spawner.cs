@@ -20,6 +20,9 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.isLive)
+            return;
+
         //DeltaTime : 한 프레임에 걸린 시간
         timer += Time.deltaTime;
 

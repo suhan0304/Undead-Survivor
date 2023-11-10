@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [Header("# Game Control")]
+    public bool isLive;                     //시간 정지 여부
     public float gameTime;                  //게임 시간
     public float maxGameTime = 2 * 10f;     //게임 최대 시간 (test용 20초)
 
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public PoolManager pool;
     public Player player;
+    public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
      
 
     void Awake()
@@ -31,10 +33,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
     }
 
     void Update()
     {
+        if (!isLive)
+            return;
+
         //DeltaTime : 한 프레임에 걸린 시간
         gameTime += Time.deltaTime;
 
@@ -49,10 +55,23 @@ public class GameManager : MonoBehaviour
     {
         exp++;
 
-        if(exp == nextExp[level])
+        if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
         {
             level++;
             exp = 0;
+            uiLevelUp.Show();
         }
+    }
+
+    public void Stop()
+    {
+        isLive = false;
+        Time.timeScale = 0; //유니티의 시간 속도(배율)
+    }
+
+    public void Resume()
+    {
+        isLive = true;
+        Time.timeScale = 1; //유니티의 시간 속도(배율)
     }
 }
