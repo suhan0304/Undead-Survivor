@@ -30,10 +30,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public void GameStart()
     {
         health = maxHealth;
         uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
+        isLive = true;
     }
 
     void Update()
