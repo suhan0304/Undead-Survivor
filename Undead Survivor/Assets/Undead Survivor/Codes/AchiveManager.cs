@@ -7,15 +7,17 @@ public class AchiveManager : MonoBehaviour
 {
     public GameObject[] lockCharacter;      //잠금된 캐릭터 버튼
     public GameObject[] unlockCharacter;    //해제된 캐릭터 버튼
+    public GameObject uiNotice;
 
     enum Achive { UnlockPotato, UnlockBean }
-
     Achive[] achives;
+    WaitForSecondsRealtime wait; //멈추지 않는시간
 
     void Awake()
     {
         //Achive 열거형을 achives 리스트에 저장
         achives = (Achive[])Enum.GetValues(typeof(Achive));
+        wait = new WaitForSecondsRealtime(5);
         if (!PlayerPrefs.HasKey("MyData")) // MyData가 없으면 처음 실행을 의미
         {
             Init(); 
@@ -78,6 +80,28 @@ public class AchiveManager : MonoBehaviour
         if (isAchive && PlayerPrefs.GetInt(achive.ToString()) == 0)
         {
             PlayerPrefs.SetInt(achive.ToString(), 1);//업적 해금
+
+            //어떤 업적인지 Notice에 나타내주는 로직
+            for(int i=0;i<uiNotice.transform.childCount;i++)
+            {
+                bool isActive = i == (int)achive; //첫번째 업적인지, 두번째 업적인지 확인
+                uiNotice.transform.GetChild(i).gameObject.SetActive(isActive); //i번째 자식 활성화
+            }
+
+            //Notice 활성화
+            StartCoroutine(NoticeRoutine());
         }
+    }
+
+    //알림 창을 활성화했다가 일정 시간 이후 비활성화하는 코루틴 생성
+    IEnumerator NoticeRoutine()
+    {
+        //Notice 활성화
+        uiNotice.SetActive(true);
+
+        yield return wait; //5초 대기 (위에 미리 선언해서 메모리 절약)
+
+        //Notice 비활성화
+        uiNotice.SetActive(false);
     }
 }
