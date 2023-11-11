@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;     //게임 최대 시간 (test용 20초)
 
     [Header("# Player Info")]
+    public int playerId;
     public float health;
     public float maxHealth = 100;
     public int level;   //레벨
@@ -33,10 +34,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    public void GameStart()
+    public void GameStart(int id)
     {
+        playerId = id;
         health = maxHealth;
-        uiLevelUp.Select(0); //0번째 무기 버튼 Click이벤트 호출
+
+        player.gameObject.SetActive(true);
+        uiLevelUp.Select(playerId % 2); //고른 캐릭터에 따라 기본무기 변경
         Resume();           //재시작 시 시간 배속을 1로 맞춰 주도록 start에 resume 호출
     }
 

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float speed;
     public Scanner scanner;
     public Hand[] hands;
+    public RuntimeAnimatorController[] animCon;
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -22,7 +23,14 @@ public class Player : MonoBehaviour
         scanner = GetComponent<Scanner>();
         hands = GetComponentsInChildren<Hand>(true); //true를 넣으면 비활성화 된 오브젝트의 컴포넌트도 가져올 수 있다.
     }
-    
+
+    void OnEnable()
+    {
+        speed *= Character.Speed;
+        anim.runtimeAnimatorController = animCon[GameManager.Instance.playerId];    
+    }
+
+
     void FixedUpdate()
     {
         if (!GameManager.Instance.isLive)

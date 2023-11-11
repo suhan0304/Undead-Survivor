@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
         Transform target = GameManager.Instance.player.transform;
         Vector3 targetPos = target.position;
         float dir = Vector3.Distance(targetPos, transform.position);
-        if (dir > 20f)
+        if (dir > 20f && per != -1)
         {
             rigid.velocity = Vector2.zero;//비활성화 이전에 재사용을 위해 미리 물리 속도 초기화
             this.gameObject.SetActive(false); //비활성화

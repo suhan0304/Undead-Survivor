@@ -49,8 +49,8 @@ public class Weapon : MonoBehaviour
 
     public void LevelUp(float damage, int count)
     {
-        this.damage += 3;   //데미지 3 증가
-        this.count += 1;    //카운트 1증가
+        this.damage = damage * Character.Damage;   
+        this.count += count;  
 
         if (id == 0) //id가 0이면 재배치
             Batch();
@@ -71,8 +71,8 @@ public class Weapon : MonoBehaviour
 
         //Property Set
         id = data.itemId;
-        damage = data.baseDamage;
-        count = data.baseCount;
+        damage = data.baseDamage * Character.Damage;
+        count = data.baseCount + Character.Count;
 
         for (int i=0;i<GameManager.Instance.pool.prefabs.Length;i++)
         {
@@ -89,11 +89,11 @@ public class Weapon : MonoBehaviour
         switch(id)
         {
             case 0:
-                speed = 150;   //마이너스 = 시계방향
+                speed = 150 * Character.WeaponSpeed;   //마이너스 = 시계방향
                 Batch();        //무기 배치          
                 break;
             case 1:
-                speed = 0.3f;   //0.3초에 한번 발사 
+                speed = 0.3f * Character.WeaponRate;   //0.3초에 한번 발사 
                 break;
             default:
                 break;
