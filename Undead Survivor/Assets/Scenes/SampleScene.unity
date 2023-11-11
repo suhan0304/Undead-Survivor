@@ -7773,7 +7773,7 @@ MonoBehaviour:
   player: {fileID: 698834957}
   uiLevelUp: {fileID: 299287200}
   uiResult: {fileID: 433254483}
-  enemyCleaner: {fileID: 0}
+  enemyCleaner: {fileID: 487722956}
 --- !u!4 &729724573
 Transform:
   m_ObjectHideFlags: 0
