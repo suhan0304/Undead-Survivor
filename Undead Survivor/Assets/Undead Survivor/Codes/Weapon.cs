@@ -154,5 +154,7 @@ public class Weapon : MonoBehaviour
         //지정된 축을 중심으로 목표를 향해 회전하는 함수
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         bullet.GetComponent<Bullet>().Init(damage, count, dir); //관통을 count로 지정
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
     }
 }

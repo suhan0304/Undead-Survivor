@@ -20,6 +20,8 @@ public class LevelUp : MonoBehaviour
         Next();
         rect.localScale = Vector3.one;
         GameManager.Instance.Stop();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
+        AudioManager.instance.EffectBgm(true);
     }
 
     //레벨업 창을 숨기는 함수
@@ -27,11 +29,14 @@ public class LevelUp : MonoBehaviour
     {
         rect.localScale = Vector3.zero;
         GameManager.Instance.Resume();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        AudioManager.instance.EffectBgm(false);
     }
 
     public void Select(int index)
     {
         items[index].OnClick();
+   
     }
 
     void Next()
