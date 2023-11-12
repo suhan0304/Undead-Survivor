@@ -98,6 +98,7 @@ public class AchiveManager : MonoBehaviour
     {
         //Notice 활성화
         uiNotice.SetActive(true);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
 
         yield return wait; //5초 대기 (위에 미리 선언해서 메모리 절약)
 
