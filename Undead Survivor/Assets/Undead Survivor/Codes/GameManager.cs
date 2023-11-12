@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Player player;
     public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
-    public Result uiResult;  //결과창 오브젝트
+    public Result uiResult;   //결과창 오브젝트
+    public Transform uiJoy;   //조이스틱 오브젝트
     public GameObject enemyCleaner;
-
+    
 
     void Awake()
     {
@@ -126,11 +127,13 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0; //유니티의 시간 속도(배율)
+        uiJoy.localScale = Vector3.zero; //조이스틱 숨기기
     }
 
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1; //유니티의 시간 속도(배율)
+        uiJoy.localScale = Vector3.one; //조이스틱 보여주기
     }
 }
