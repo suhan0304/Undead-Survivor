@@ -86,6 +86,7 @@ public class Enemy : MonoBehaviour
         {
             // .. 아직 살아있음 -> Hit Action 
             anim.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else
         {
@@ -97,6 +98,8 @@ public class Enemy : MonoBehaviour
             anim.SetBool("Dead", true);  //Dead 애니메이션을 실행 
             GameManager.Instance.kill++;
             GameManager.Instance.GetExp();
+            if(GameManager.Instance.isLive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
 
         }
     }

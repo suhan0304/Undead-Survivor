@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         this.damage = damage;   //Bullet의 데미지를 매개변수 데미지로 초기화
         this.per = per;         //Bullet의 관통을 매개변수 관통으로 초기화
 
-        if(per > -1)
+        if(per >= 0)
         {
             rigid.velocity = dir * 15f; //속도는 15로 사용 
         }
@@ -28,32 +28,23 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         // 몬스터와 만난게 아니거나, 관통이 무한일 경우 return
-        if (!collision.CompareTag("Enemy") || per == -1)
+        if (!collision.CompareTag("Enemy") || per == -100)
             return;
 
         per--;
 
-        if(per == -1) //per 수치만큼 몬스터를 만나서 -1까지 감소
+        if(per < 0) //per 수치만큼 몬스터를 만나서 0보다 작아지면 삭제
         {
             rigid.velocity = Vector2.zero;//비활성화 이전에 재사용을 위해 미리 물리 속도 초기화
             gameObject.SetActive(false); //비활성화
         }
     }
 
-    void Update() //Dead를 프레임 단위로 수행
+    void OnTriggerExit2D(Collider2D collision)
     {
-        Dead();
-    }
+        if (!collision.CompareTag("Area") || per == -100)
+            return;
 
-    void Dead() //player와의 거리가 20보다 멀어지면 비활성화 되도록 설정
-    {
-        Transform target = GameManager.Instance.player.transform;
-        Vector3 targetPos = target.position;
-        float dir = Vector3.Distance(targetPos, transform.position);
-        if (dir > 20f && per != -1)
-        {
-            rigid.velocity = Vector2.zero;//비활성화 이전에 재사용을 위해 미리 물리 속도 초기화
-            this.gameObject.SetActive(false); //비활성화
-        }
+        gameObject.SetActive(false);
     }
 }

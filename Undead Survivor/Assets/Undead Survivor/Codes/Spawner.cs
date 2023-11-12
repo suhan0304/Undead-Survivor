@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
 
     //몬스터들의 데이터가 들어갈 배열
     public SpawnData[] spawnData;
+    public float levelTime;
 
     int level; //시간에 따른 레벨 지정
     float timer;
@@ -16,6 +17,7 @@ public class Spawner : MonoBehaviour
     {
         // 배열로 여러개를 가져올 것이기 때문에 Component's'를 써야함
         spawnPoint = GetComponentsInChildren<Transform>();
+        levelTime = GameManager.Instance.maxGameTime / spawnData.Length;
     }
 
     void Update()
@@ -26,8 +28,8 @@ public class Spawner : MonoBehaviour
         //DeltaTime : 한 프레임에 걸린 시간
         timer += Time.deltaTime;
 
-        //gameTime을 10으로 나누어서 내림(Floor) 한 후 정수형으로 레벨 지정
-        level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / 10f), spawnData.Length - 1);
+        //gameTime을 levelTime으로 나누어서 내림(Floor) 한 후 정수형으로 레벨 지정
+        level = Mathf.Min(Mathf.FloorToInt(GameManager.Instance.gameTime / levelTime), spawnData.Length - 1);
 
 
         //1초마다 Spawn 실행 
