@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         //static은 인스턴스에 나오지 않으므로 초기화 해줘야함
         Instance = this;
+        Application.targetFrameRate = 60;
     }
 
     public void GameStart(int id)
@@ -90,6 +91,11 @@ public class GameManager : MonoBehaviour
     public void GameRetry()
     {
         SceneManager.LoadScene(0);//0번째 Scene을 불러온다.
+    }
+
+    public void GameQuit()
+    {
+        Application.Quit();
     }
 
     void Update()
