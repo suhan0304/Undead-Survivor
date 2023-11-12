@@ -24,14 +24,16 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Player player;
     public LevelUp uiLevelUp; //레벨업 변수 선언 및 초기화
-    public Result uiResult;  //결과창 오브젝트
+    public Result uiResult;   //결과창 오브젝트
+    public Transform uiJoy;   //조이스틱 오브젝트
     public GameObject enemyCleaner;
-
+    
 
     void Awake()
     {
         //static은 인스턴스에 나오지 않으므로 초기화 해줘야함
         Instance = this;
+        Application.targetFrameRate = 60;
     }
 
     public void GameStart(int id)
@@ -91,6 +93,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);//0번째 Scene을 불러온다.
     }
 
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
     void Update()
     {
         if (!isLive)
@@ -126,11 +133,13 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0; //유니티의 시간 속도(배율)
+        uiJoy.localScale = Vector3.zero; //조이스틱 숨기기
     }
 
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1; //유니티의 시간 속도(배율)
+        uiJoy.localScale = Vector3.one; //조이스틱 보여주기
     }
 }
