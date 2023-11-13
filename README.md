@@ -1,15 +1,10 @@
 # Undead-Survivor
-
 ![undeadsurvivor](https://github.com/suhan0304/Undead-Survivor/assets/102403989/f0ed736c-48b0-43cc-9407-e49ba77221f2)
-
-Roguelike game in the "vampire survival" style
 
 ---
 
 # In-Game
-<p align="center">
-<img src="![12](https://github.com/suhan0304/Undead-Survivor/assets/102403989/b77488ba-7acf-47d8-a554-903799b17771)">
-</p>
+![12](https://github.com/suhan0304/Undead-Survivor/assets/102403989/a1475d89-6f41-41ba-a16c-e63013faae0a)
 
 ---
 
@@ -18,17 +13,16 @@ It is a vampire survival roguelike game. It was created with reference to the "G
 
 ---
 
-### Stacks
+## Stacks
 
 #### Environment
-<img src="https://img.shields.io/badge/unity-##000000?style=for-the-badge&logo=unity&logoColor=white">
+<img src="https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=Unity&logoColor=white">
 
 #### Development
-<img src="https://img.shields.io/badge/c#-#512BD4?style=for-the-badge&logo=c#&logoColor=white">
+<img src="https://img.shields.io/badge/C Sharp-512BD4?style=for-the-badge&logo=Csharp&logoColor=white">
 
 #### Comunication
-<img src="https://img.shields.io/badge/velog-#20C997?style=for-the-badge&logo=velog&logoColor=white">
-<img src="https://img.shields.io/badge/notion-#000000?style=for-the-badge&logo=notion&logoColor=white">
+<img src="https://img.shields.io/badge/Velog-20C997?style=for-the-badge&logo=Velog&logoColor=white"><img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
 
 ---
 
